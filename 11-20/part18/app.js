@@ -138,22 +138,22 @@ var app = Vue.createApp({
                 {
                     name:"F1",
                     type:"available",
-                    price:500
+                    price:400
                 },
                 {
                     name:"F2",
                     type:"available",
-                    price:500
+                    price:400
                 },
                 {
                     name:"F3",
                     type:"available",
-                    price:500
+                    price:400
                 },
                 {
                     name:"F4",
                     type:"available",
-                    price:500
+                    price:400
                 }
             ]
             }     
