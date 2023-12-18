@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue js-3 Bangla Tutorial</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="vue.global.js"></script>
+</head>
+<body>
+    <header>Vue Js-3 Bangla Tutorial </header>
+
+    <div id="app">
+      <h2>Conditional Rendaring</h2>
+     
+      <button @click="showHide">Show/Hide</button>
+      <div class="card" v-show="show"></div>
+      <br><hr>
+
+      <ul>
+        <li v-for="(skil,i) in skills">
+            {{i+1}}. {{skil.name}} - 
+            <span v-if="skil.expe<3">Beginner</span>
+            <span v-else-if="skil.expe<5">Midlavel</span>
+            <span v-else>Expart</span>
+        </li>
+      </ul>
+       
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

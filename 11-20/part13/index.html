@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue js-3 Bangla Tutorial</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="vue.global.js"></script>
+</head>
+<body>
+    <header>Vue Js-3 Bangla Tutorial </header>
+
+    <div id="app">
+      <h2>About Me</h2>
+     <table>
+       <tr v-for="(value,key,i) in aboutMe" :key="name">
+        
+          <td>{{i}}</td>
+          <td>{{key}}</td>
+          <td>{{value}}</td>
+          
+       </tr>
+     </table>
+
+     <template v-for="s in skills">{{s}},</template>
+       
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
