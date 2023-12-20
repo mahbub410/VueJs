@@ -159,18 +159,18 @@ var app = Vue.createApp({
             }     
     },
     methods:{
-        handleclick(i){
-            let clickSeat = this.seats[i]
-            if(clickSeat.type==='sold' || clickSeat.type==='booked'){
-                alert("You can't select this seat")
+        selectSeat(i){
+            let selectValue = this.seats[i]
+             if(selectValue.type === 'booked' ||selectValue.type === 'sold'){
+                alert("Sorry You Can't select this seat!")
                 return
-            }
-            if(this.selectedSeats.length>2){
-                alert("You can't select more then 3 seat")
+             }
+             if(this.selectedSeats.length>2){
+                alert("you can't select more then 3 seats")
                 return
-            }
-            clickSeat.type = clickSeat.type === 'selected' ? 'available' : 'selected'
-            console.log(clickSeat.type);
+             }
+
+             selectValue.type= selectValue.type ===  'selected' ? 'available' : 'selected' 
             
         },
         confirm() {
@@ -180,53 +180,52 @@ var app = Vue.createApp({
             }
       
             this.confirmed = true;
-          },
-          resetData() {
-            this.confirmed = false;
-            this.name = "";
-            this.mobile = "";
-            this.appliedCoupon = null;
-      
-            this.seats.forEach((seat) => {
-              if (seat.type === "selected") {
-                seat.type = "sold";
-              }
-            });
-          }
+        },
+        resetData(){
+            this.confirmed = false
+            this.name=""
+            this.mobile=""
+            this.appliedcoupun=""
+
+            this.seats.forEach(seat=>{
+                if(seat.type==='selected'){
+                    seat.type='sold'
+                }
+            })
+        }
     },
     computed:{
-       selectedSeats(){
-        let sc = this.seats.filter((item)=>item.type==='selected')
-        return sc
-       },
-       totalCost(){
-        let tc=0;
-        this.selectedSeats.forEach((seat)=>{
-            tc+=seat.price;
-        })
-
-        if(this.appliedcoupun !== null){
-            tc = tc-this.appliedcoupun.discount
-        }
-        return tc
+        selectedSeats(){
+            let sc = this.seats.filter((item)=>item.type === 'selected')
+            return sc
+        },
+        totalCost(){
+            let tc=0;
+                this.selectedSeats.forEach(itm => {
+                    tc+=itm.price
+                });
+                if(this.appliedcoupun !== null){
+                    tc=tc-this.appliedcoupun.discount
+                }
+            return tc
         }
     },
     
     watch:{
         couponCode(newValue){
             if(newValue.length===10){
-                
-                let searchCoupons=this.coupons.filter(
-                    (item)=>item.code===newValue
-                );
-
-                if(searchCoupons.length===1){
-                    this.appliedcoupun=searchCoupons[0];
+                let srchCopun = this.coupons.filter(
+                    (itm)=>itm.code===newValue
+                    );
+                if(srchCopun.length===1){
+                    this.appliedcoupun = srchCopun[0]
                     this.couponCode=""
                 }else{
-                    alert("Coupon not valid")
+                    alert("invalid coupon")
+                    return
                 }
             }
+            
         }
     }
 })

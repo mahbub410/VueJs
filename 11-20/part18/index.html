@@ -13,133 +13,131 @@
     <header>Vue Js-3 Bangla Tutorial</header>
 
     <div id="app">
-        <h1 class="app-title">Ticket Booking App</h1>
+        <h1 class="app-title">Ticket booking app</h1>
         <div class="ticket-app">
             <div class="confirmed-dialog" v-if="confirmed">
                 <h3>Ticket confirmed!</h3>
                 <hr>
                 <br>
                 <table class="selected-seats">
-                  <tr>
-                    <th>Passenger Name</th>
-                  <td>{{name}}</td>
-                  <tr>
-                    <th>Passenger Contact</th>
-                  <td>{{mobile}}</td>
-                  
-                  </tr>
-                  <tr>
-                    <th>Seats:</th>
-                    <td>
-                      <div v-for="(seat, i) in selectedSeats" :key="seat.name">
-                        <div>
-                          {{seat.name}}
-                        </div>
-      
-                      </div>
-                    </td>
-      
-                   
-                  </tr>
-                  <tr>
-                    <th>Total Cost</th>
-                    <td>Tk. {{totalCost}}</td>
-                  </tr>
-      
+                    <tr>
+                        <th>Passenger Name</th>
+                        <td>{{name}}</td>
+                    <tr>
+                        <th>Passenger Contact</th>
+                        <td>{{mobile}}</td>
+
+                    </tr>
+                    <tr>
+                        <th>Seats:</th>
+                        <td>
+                            <div v-for="seat in selectedSeats" :key="seat.name">
+                                <div>
+                                    {{seat.name}}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Total Cost</th>
+                        <td>Tk.{{totalCost}}</td>
+                    </tr>
                 </table>
-      
                 <br>
-      
-                <button
-                    class="confirm-button"
-                    @click="resetData"
-                  >
-                    Book Again
-                  </button>
-      
-      
-              </div>
+
+                <button class="confirm-button" @click="resetData">Book Again
+                </button>
+
+            </div>
+
+            <!-- start ticket-app__top class -->
             <div class="ticket-app__top">
                 <div class="seat-states">
                     <div class="seat-state" v-for="(value,key) in seatStates">
                         <div class="seat-state__color" :style="{backgroundColor: value.color}"></div>
-                        <div class="seat-state__text">{{ value.text}}</div>
+                        <div class="seat-state__text">{{value.text}}</div>
                     </div>
                 </div>
             </div>
-            <!--clos class ticket-app__top -->
-            <div class="ticket-app__buttom">
+            <!-- end ticket-app__top class -->
+
+            <!-- start ticket-app__bottom class -->
+            <div class="ticket-app__bottom">
+
+                <!-- start ticket-app__left -->
                 <div class="ticket-app__left">
                     <div class="bus">
                         <div class="bus__top">
                             <div class="bus__door">Door</div>
                             <div class="bus__driver">Driver</div>
                         </div>
+
                         <div class="seats">
                             <div class="seat" :class="{
-                                'seat--sold': seat.type === 'sold',
-                                'seat--booked': seat.type === 'booked',
-                                'seat--selected': seat.type === 'selected'
-                            }" v-for="(seat,i) in seats" :key="seat.name" @click="handleclick(i)">
+                                    'seat--sold':       seat.type==='sold',
+                                    'seat--booked':     seat.type==='booked',
+                                    'seat--selected':   seat.type==='selected'
+                                 }" v-for="(seat,i) in seats" ::key="seat.name" @click="selectSeat(i)">
                                 {{seat.name}}
                             </div>
                         </div>
                     </div>
                 </div>
-                <!--clos class ticket-app__left -->
-                <div class="ticket-app__instraction" 
-                    v-if="selectedSeats.length===0">
-                    No Seat Selectes
+                <!-- end ticket-app__left -->
+
+                <div class="ticket-app__instruction" v-if="selectedSeats.length===0">
+                    No seat selected <br />
+                    Select some seats first
                 </div>
-                <div class="ticket-app__right" v-else>
-                    <div class="cart">
-                        <strong>Selected seats </strong>
+
+                <div class="ticket-app__right">
+                    <div class="cart" v-if="selectedSeats.length>0">
+                        <strong>Selected Seats</strong>
                         <table class="selected-seats">
                             <thead>
                                 <tr>
                                     <th>Seat</th>
-                                    <th>price</th>
+                                    <th>Price</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="(seat,i) in selectedSeats" ::key="seat.name">
-                                    <td>{{seat.name}}</td>
-                                    <td>Tk. {{seat.price}}</td>
+                                <tr v-for="slt in selectedSeats" ::key="slt.name">
+                                    <td>{{slt.name}}</td>
+                                    <td>Tk. {{slt.price}}</td>
                                 </tr>
-                                <tr v-if="appliedcoupun != null">
-                                    <th>Discount</th>
-                                    <th>Tk. -{{appliedcoupun.discount}}</th>
+
+                                <tr v-if="appliedcoupun !== null">
+                                    <td>Discount</td>
+                                    <td>Tk. -{{appliedcoupun.discount}}</td>
                                 </tr>
                                 <tr>
                                     <th>Total</th>
-                                    <th>Tk. {{totalCost}}</th>
+                                    <th>Tk. {{totalCost  }}</th>
                                 </tr>
                             </tbody>
                         </table>
-                        <p v-if="appliedcoupun===null">
-                            Have A Coupon?
-                            <input type="text" v-model="couponCode" placeholder="10 digit code">
+
+                        <p v-if="appliedcoupun === null">
+                            Have a coupon? <input type="text" placeholder="10 Digits Code" v-model="couponCode">
                         </p>
                         <p v-else>
                             Applied Coupon: {{appliedcoupun.code}}
                         </p>
+
                     </div>
+
                     <div class="info">
                         <input type="text" placeholder="Name" v-model="name" />
                         <input type="text" placeholder="Mobile" v-model="mobile" />
-                      </div>
-          
-                      <button
-                        class="confirm-button"
-                        :class="{'confirm-button__disabled': selectedSeats.length === 0}"
-                        :disabled="selectedSeats.length === 0"
-                        @click="confirm"
-                      >
+                    </div>
+
+                    <button class="confirm-button" :class="{'confirm-button__disabled': selectedSeats.length === 0}"
+                        :disabled="selectedSeats.length === 0" @click="confirm">
                         Confirm
-                      </button>
+                    </button>
                 </div>
             </div>
-            <!--clos class ticket-app__buttom -->
+            <!-- end ticket-app__bottom class -->
         </div>
     </div>
 
